@@ -29,11 +29,20 @@ jobs:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
-      # Mirror the same version to GitHub Packages under the owner's scope.
-      - if: steps.changesets.outputs.published == 'true'
+      # Mirror whatever version is on npm to GitHub Packages under the owner's scope.
+      # Checks the registry itself rather than trusting the changesets "published" output.
+      - name: Mirror to GitHub Packages
         working-directory: packages/inkwire
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
+          VERSION=$(node -p "require('./package.json').version")
+          npm view "inkwire@$VERSION" version >/dev/null 2>&1 || { echo "inkwire@$VERSION not on npm yet, skipping"; exit 0; }
+          echo "@vjymisal0:registry=https://npm.pkg.github.com" > .npmrc
+          echo "//npm.pkg.github.com/:_authToken=${NODE_AUTH_TOKEN}" >> .npmrc
+          if npm view "@vjymisal0/inkwire@$VERSION" version >/dev/null 2>&1; then
+            echo "@vjymisal0/inkwire@$VERSION already mirrored"; exit 0
+          fi
           npm pkg set name=@vjymisal0/inkwire
           npm pkg delete publishConfig.provenance
-          echo "//npm.pkg.github.com/:_authToken=${{ secrets.GITHUB_TOKEN }}" > .npmrc
           npm publish --registry https://npm.pkg.github.com
