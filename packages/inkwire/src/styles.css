@@ -42,7 +42,8 @@
 /* Scoped reset for our own controls: there is no global preflight, so neutralise UA button styles
    in the base layer, where any utility class still wins. */
 @layer base {
-  .iw-root button {
+  .iw-root button,
+  button.iw-root {
     border: 0;
     background: none;
     color: inherit;
@@ -51,4 +52,57 @@
     cursor: pointer;
   }
   .iw-root svg { display: block; }
+}
+
+/* ---------- keyframe-driven components ---------- */
+@layer components {
+  .iw-caret { animation: iw-blink 1s steps(2, start) infinite; }
+
+  .iw-gradient-pan { animation: iw-pan var(--iw-speed, 6s) linear infinite; }
+
+  .iw-marquee-x { animation: iw-marquee-x var(--iw-duration, 30s) linear infinite; }
+  .iw-marquee-y { animation: iw-marquee-y var(--iw-duration, 30s) linear infinite; }
+  .iw-marquee-reverse { animation-direction: reverse; }
+  .iw-marquee[data-paused-on-hover]:hover > * { animation-play-state: paused; }
+
+  .iw-shimmer::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(110deg, transparent 30%, var(--iw-shimmer) 50%, transparent 70%);
+    transform: translateX(-100%);
+    animation: iw-shimmer var(--iw-duration, 2.6s) ease-in-out infinite;
+  }
+
+  /* A conic gradient spun around the box, masked down to just the border ring. */
+  .iw-beam {
+    padding: var(--iw-border-width, 1.5px);
+    background: conic-gradient(from var(--iw-angle), transparent 0 70%, var(--iw-from) 82%, var(--iw-to) 92%, transparent 100%);
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0);
+    animation: iw-spin var(--iw-duration, 6s) linear infinite;
+  }
+
+  .iw-ping { animation: iw-ping 1.6s cubic-bezier(0, 0, 0.2, 1) infinite; }
+}
+
+@property --iw-angle {
+  syntax: "<angle>";
+  initial-value: 0deg;
+  inherits: false;
+}
+
+@keyframes iw-blink { to { visibility: hidden; } }
+@keyframes iw-pan { to { background-position: -200% 0; } }
+@keyframes iw-marquee-x { to { transform: translateX(calc(-100% - var(--iw-gap, 2rem))); } }
+@keyframes iw-marquee-y { to { transform: translateY(calc(-100% - var(--iw-gap, 2rem))); } }
+@keyframes iw-shimmer { 0% { transform: translateX(-100%); } 60%, 100% { transform: translateX(100%); } }
+@keyframes iw-spin { to { --iw-angle: 360deg; } }
+@keyframes iw-ping { 75%, 100% { transform: scale(2.4); opacity: 0; } }
+
+@media (prefers-reduced-motion: reduce) {
+  .iw-caret, .iw-gradient-pan, .iw-marquee-x, .iw-marquee-y, .iw-shimmer::before, .iw-beam, .iw-ping {
+    animation: none;
+  }
 }

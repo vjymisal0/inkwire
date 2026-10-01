@@ -80,3 +80,6 @@ import "inkwire/styles.css";
 - The docs site is **Vite** rather than Next.js. It deploys to Vercel the same way, and since it uses no Tailwind it also serves as the no-Tailwind smoke test, replacing `examples/vite-smoke`.
 - Utility classes are **unprefixed** but ship without preflight (Tailwind v4 `theme` + `utilities` only). A scoped `.iw-root` reset covers the library's own buttons. Theme tokens map to `--iw-*` through `@theme inline`.
 - TypeScript is pinned to 5.x because tsup's d.ts build fails on TypeScript 7.
+- v0.1.0 grew from 4 to 18 components at the user's request (animated text, monitoring widgets, effects). See README.
+- The docs site deploys to **GitHub Pages** (`.github/workflows/docs.yml`, `DOCS_BASE=/inkwire/`); Vercel still works with the default base.
+- The shadcn registry only emits components that need no inkwire-specific CSS (8 of 18).

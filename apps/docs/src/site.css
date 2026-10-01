@@ -98,3 +98,40 @@ th { color: var(--muted); font-weight: 500; }
 
 footer { padding: 40px 0 60px; color: var(--muted); font-size: 13px; border-top: 1px solid var(--line); }
 @media (max-width: 520px) { .preview { padding: 20px 14px; } .hero { padding-top: 44px; } }
+
+.cta { display: flex; flex-wrap: wrap; align-items: center; gap: 14px; margin: -8px 0 28px; }
+.ghost { font-size: 14px; color: var(--muted); text-decoration: none; border-bottom: 1px dashed var(--line); }
+.ghost:hover { color: var(--ink); }
+.muted { color: var(--muted); }
+.row { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 20px; }
+
+.showcase { padding: 8px 0 40px; }
+.caption { color: var(--muted); font-size: 13px; text-align: center; margin-top: 14px; }
+.dashboard { padding: 22px; background: var(--surface); }
+.dash-head { display: flex; flex-wrap: wrap; gap: 10px; justify-content: space-between; align-items: center; margin-bottom: 18px; }
+.metrics { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 14px; margin-bottom: 22px; }
+.metric {
+  display: flex; flex-direction: column; gap: 4px; padding: 14px;
+  border: 1px solid var(--line); border-radius: 12px; background: var(--bg);
+}
+.metric svg { width: 100%; height: auto; }
+.metric-label { font-size: 12px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.06em; }
+.metric-value { font-size: 24px; font-weight: 600; font-family: "JetBrains Mono", monospace; }
+
+.logos { padding: 18px 0; border-top: 1px solid var(--line); }
+.chip {
+  white-space: nowrap; font-size: 13px; padding: 6px 14px; border-radius: 999px;
+  border: 1px solid var(--line); background: var(--surface); color: var(--muted);
+}
+
+.big-text { font-family: Fraunces, serif; font-size: clamp(24px, 4vw, 36px); text-align: center; }
+.big-text.mono { font-family: "JetBrains Mono", monospace; letter-spacing: 0.08em; }
+.ticker span { display: flex; flex-direction: column; align-items: center; font-size: 30px; font-weight: 600; font-family: "JetBrains Mono", monospace; }
+.ticker small { font: 12px Inter, sans-serif; color: var(--muted); }
+
+.spot { width: 210px; padding: 22px; display: flex; flex-direction: column; gap: 8px; min-height: 130px; }
+.spot > div { display: flex; flex-direction: column; gap: 8px; }
+.beam-demo { padding: 28px 34px; display: flex; flex-direction: column; gap: 6px; text-align: center; }
+.beam-demo > div:last-child { display: flex; flex-direction: column; gap: 6px; }
+.dark .dashboard, .dark .spot, .dark .beam-demo { --iw-background: var(--surface); }
+:root { --iw-background: var(--surface); --iw-border: var(--line); }
