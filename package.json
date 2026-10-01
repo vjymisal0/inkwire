@@ -1,0 +1,14 @@
+{
+  "name": "inkwire-monorepo",
+  "private": true,
+  "packageManager": "pnpm@10.15.0",
+  "scripts": {
+    "build": "pnpm --filter inkwire build && node scripts/build-registry.mjs && pnpm --filter docs build",
+    "dev": "pnpm --filter inkwire build && node scripts/build-registry.mjs && pnpm --filter docs dev",
+    "test": "pnpm --filter inkwire test",
+    "typecheck": "pnpm -r typecheck"
+  },
+  "devDependencies": {
+    "@changesets/cli": "^3.0.3"
+  }
+}

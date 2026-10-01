@@ -1,0 +1,54 @@
+/* Only utilities (no preflight), so importing inkwire never resets the host app's styles. */
+@layer theme, base, components, utilities;
+@import "tailwindcss/theme" layer(theme);
+@import "tailwindcss/utilities" layer(utilities);
+@source "./";
+
+/* Dark mode follows a `.dark` class or `data-theme="dark"` on any ancestor. */
+@custom-variant dark (&:where(.dark, .dark *, [data-theme="dark"], [data-theme="dark"] *));
+
+:root {
+  --iw-primary: #7c3aed;
+  --iw-primary-foreground: #ffffff;
+  --iw-secondary: #f4f4f5;
+  --iw-secondary-foreground: #27272a;
+  --iw-foreground: #18181b;
+  --iw-muted-foreground: #71717a;
+  --iw-border: #e4e4e7;
+  --iw-background: #ffffff;
+}
+:where(.dark, [data-theme="dark"]) {
+  --iw-primary: #a78bfa;
+  --iw-primary-foreground: #18181b;
+  --iw-secondary: #27272a;
+  --iw-secondary-foreground: #e4e4e7;
+  --iw-foreground: #fafafa;
+  --iw-muted-foreground: #a1a1aa;
+  --iw-border: #3f3f46;
+  --iw-background: #09090b;
+}
+
+@theme inline {
+  --color-primary: var(--iw-primary);
+  --color-primary-foreground: var(--iw-primary-foreground);
+  --color-secondary: var(--iw-secondary);
+  --color-secondary-foreground: var(--iw-secondary-foreground);
+  --color-foreground: var(--iw-foreground);
+  --color-muted-foreground: var(--iw-muted-foreground);
+  --color-border: var(--iw-border);
+  --color-background: var(--iw-background);
+}
+
+/* Scoped reset for our own controls: there is no global preflight, so neutralise UA button styles
+   in the base layer, where any utility class still wins. */
+@layer base {
+  .iw-root button {
+    border: 0;
+    background: none;
+    color: inherit;
+    font: inherit;
+    padding: 0;
+    cursor: pointer;
+  }
+  .iw-root svg { display: block; }
+}
