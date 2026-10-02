@@ -1,6 +1,6 @@
 {
   "name": "inkwire",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Hand-drawn text annotations, animated circuit/system maps, tilt cards and step players for React.",
   "license": "MIT",
   "author": "Vijay <vijay.looprai@gmail.com>",
